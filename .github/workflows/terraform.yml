@@ -34,4 +34,4 @@ jobs:
       - name: Apply Terraform Changes
         env:
           GOOGLE_CLOUD_KEYFILE_JSON: ${{ secrets.GCP_CREDENTIALS }}
-        run: terraform apply -auto-approve -var='GCP_CREDENTIALS="$GOOGLE_CLOUD_KEYFILE_JSON"'
+        run: terraform apply -auto-approve -var="GCP_CREDENTIALS=${{ secrets.GCP_CREDENTIALS }}"
