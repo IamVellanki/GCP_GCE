@@ -1,3 +1,11 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:  # Allows manual execution from GitHub Actions
+
+permissions:
+  contents: read
+
 jobs:
   terraform-destroy:
     name: Terraform Destroy
@@ -24,4 +32,6 @@ jobs:
       - name: Destroy Terraform Resources
         env:
           GOOGLE_CLOUD_KEYFILE_JSON: ${{ secrets.GCP_CREDENTIALS }}
-        run: terraform destroy -auto-approve -var="GCP_CREDENTIALS=$(cat credentials.json)"
+        run: |
+          echo '${{ secrets.GCP_CREDENTIALS }}' > credentials.json
+          terraform destroy -auto-approve -var="GCP_CREDENTIALS=$(cat credentials.json)"
