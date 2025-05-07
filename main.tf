@@ -5,7 +5,7 @@ variable "GCP_CREDENTIALS" {
 provider "google" {
   project     = "gce03021991"
   region      = "us-central1"
-  credentials = jsondecode(var.GCP_CREDENTIALS)  # ✅ Correctly decodes JSON
+  credentials = var.GCP_CREDENTIALS  # ✅ Correctly decodes JSON
 }
 
 resource "google_compute_instance" "vm_instance" {
