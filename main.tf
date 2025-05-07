@@ -1,3 +1,7 @@
+variable "GCP_CREDENTIALS" {
+  type = string
+}
+
 provider "google" {
   project     = "gce03021991"
   region      = "us-central1"
