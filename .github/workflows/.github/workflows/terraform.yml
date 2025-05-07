@@ -1,0 +1,38 @@
+name: Terraform Deployment
+
+on:
+  push:
+    branches:
+      - main  # Runs Terraform when changes are pushed to the main branch
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.6  # Change this to your Terraform version
+
+      - name: Authenticate with GCP
+        env:
+          GOOGLE_CLOUD_KEYFILE_JSON: ${{ secrets.GCP_CREDENTIALS }}
+        run: |
+          echo "$GOOGLE_CLOUD_KEYFILE_JSON" > credentials.json
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Plan Terraform Changes
+        run: terraform plan
+
+      - name: Apply Terraform Changes
+        run: terraform apply -auto-approve
