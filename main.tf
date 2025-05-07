@@ -9,7 +9,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-gce-instance2"
+  name         = "terraform-gce-instance1"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
 
