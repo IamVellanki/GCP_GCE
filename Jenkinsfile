@@ -6,10 +6,16 @@ pipeline {
     }
 
     stages {
-        stage('Terraform Init') {
+        stage('Prepare Credentials') {
             steps {
                 sh 'echo "$GOOGLE_APPLICATION_CREDENTIALS" > /tmp/credentials.json'
+                sh 'chmod 600 /tmp/credentials.json'  // Secure file permissions
                 sh 'export GOOGLE_APPLICATION_CREDENTIALS="/tmp/credentials.json"'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
                 sh 'terraform init'
             }
         }
