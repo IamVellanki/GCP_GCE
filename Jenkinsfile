@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        GOOGLE_APPLICATION_CREDENTIALS = credentials('GCP_CREDENTIALS')
+        GCP_CREDENTIALS = credentials('GCP_CREDENTIALS') // Retrieve secret from Jenkins
     }
 
     stages {
         stage('Prepare Credentials') {
             steps {
-                sh 'echo "$GOOGLE_APPLICATION_CREDENTIALS" > /tmp/credentials.json'
-                sh 'chmod 600 /tmp/credentials.json'  // Secure file permissions
-                sh 'export GOOGLE_APPLICATION_CREDENTIALS="/tmp/credentials.json"'
+                sh 'echo "$GCP_CREDENTIALS" > /tmp/credentials.json' // Save to file
+                sh 'chmod 600 /tmp/credentials.json'  // Secure permissions
+                sh 'export GOOGLE_APPLICATION_CREDENTIALS="/tmp/credentials.json"' // Set environment variable
             }
         }
 
