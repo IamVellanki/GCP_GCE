@@ -1,7 +1,6 @@
 provider "google" {
   project     = var.project_id
   region      = var.region
-  credentials = file("C:\\GCPCICD\\GCP_GCE\\credentials.json")
 }
 
 module "compute_instance" {
