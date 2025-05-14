@@ -6,14 +6,10 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git url: 'https://github.com/IamVellanki/GCP_GCE.git', branch: 'main'
-            }
-        }
-
         stage('Terraform Init') {
             steps {
+                sh 'echo "$GOOGLE_APPLICATION_CREDENTIALS" > /tmp/credentials.json'
+                sh 'export GOOGLE_APPLICATION_CREDENTIALS="/tmp/credentials.json"'
                 sh 'terraform init'
             }
         }
