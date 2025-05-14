@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Choose Terraform action')
+    }
+
     environment {
         GCP_CREDENTIALS = credentials('GCP_CREDENTIALS') // Retrieve secret from Jenkins
     }
@@ -26,9 +30,15 @@ pipeline {
             }
         }
 
-        stage('Terraform Apply') {
+        stage('Terraform Action') {
             steps {
-                sh 'terraform apply -auto-approve'
+                script {
+                    if (params.ACTION == 'apply') {
+                        sh 'terraform apply -auto-approve'
+                    } else {
+                        sh 'terraform destroy -auto-approve'
+                    }
+                }
             }
         }
     }
